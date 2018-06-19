@@ -1,10 +1,6 @@
 import React from "react";
 import "./flat.css";
 
-const style = {
-  backgroundImage: `url('${this.props.flat.imageUrl}')`
-};
-
 class Flat extends React.Component {
   render() {
     const title =
@@ -13,11 +9,18 @@ class Flat extends React.Component {
       " - " +
       this.props.flat.name;
 
+    const style = {
+      backgroundImage: `url('${this.props.flat.imageUrl}')`
+    };
+
     return (
       <div className="flat">
-        <div className="flat-pic" />
-        <div className="flat-title" />
-        {title}
+        <div className="flat-pic" style={style} />
+        <div className="flat-title">{title}</div>
+        <div className="flat" />
+        <div className="flat" />
+        <div className="flat" />
+        <div className="flat" />
       </div>
     );
   }

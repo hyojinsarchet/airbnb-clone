@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
+// import logo from "./logo.svg";
 import "./App.css";
 import Flat from "./components/Flat";
 import Marker from "./components/Marker";
@@ -9,7 +9,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      flats: []
+      flats: [],
+      selectedFlat: null
     };
   }
 
@@ -30,6 +31,13 @@ class App extends Component {
         });
       });
   }
+
+  selectFlat = flat => {
+    console.log(flat);
+    this.setState({
+      selectedFlat: flat
+    });
+  };
 
   render() {
     // const flat = {
@@ -54,8 +62,14 @@ class App extends Component {
         <div className="main">
           <div className="search" />
           <div className="flats">
-            {this.state.flats.map(function(flat) {
-              return <Flat flat={flat} />;
+            {this.state.flats.map(flat => {
+              return (
+                <Flat
+                  key={flat.name}
+                  flat={flat}
+                  selectFlat={this.selectFlat}
+                />
+              );
             })}
           </div>
         </div>
@@ -65,8 +79,15 @@ class App extends Component {
             center={center}
             defaultZoom={11}
           >
-            {this.state.flats.map(function(flat) {
-              return <Marker lat={flat.lat} lng={flat.lng} text={flat.price} />;
+            {this.state.flats.map(flat => {
+              return (
+                <Marker
+                  key={flat.name}
+                  lat={flat.lat}
+                  lng={flat.lng}
+                  text={flat.price}
+                />
+              );
             })}
           </GoogleMapReact>
         </div>

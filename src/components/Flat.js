@@ -2,6 +2,11 @@ import React from "react";
 import "./flat.css";
 
 class Flat extends React.Component {
+  handleClick = () => {
+    // Call the parent method selectFlat
+    this.props.selectFlat(this.props.flat);
+  };
+
   render() {
     const title =
       this.props.flat.price +
@@ -14,7 +19,7 @@ class Flat extends React.Component {
     };
 
     return (
-      <div className="flat">
+      <div className="flat" onClick={this.handleClick}>
         <div className="flat-pic" style={style} />
         <div className="flat-title">{title}</div>
         <div className="flat" />

@@ -4,26 +4,53 @@ import "./App.css";
 import Flat from "./components/Flat";
 
 class App extends Component {
-  render() {
-    const flat = {
-      id: 148,
-      name: "Trendy Apt in Buttes Montmartre",
-      imageUrl:
-        "https://raw.githubusercontent.com/lewagon/flats-boilerplate/master/images/flat2.jpg",
-      price: 200,
-      priceCurrency: "EUR",
-      lat: 48.885707,
-      lng: 2.343543
+  constructor(props) {
+    super(props);
+    this.state = {
+      flats: []
     };
+  }
+
+  componentDidMount() {
+    console.log("DID MOUNT");
+
+    const url =
+      "https://raw.githubusercontent.com/lewagon/flats-boilerplate/master/flats.json";
+
+    // AJAX
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+
+        this.setState({
+          flats: data
+        });
+      });
+  }
+
+  render() {
+    // const flat = {
+    //   id: 148,
+    //   name: "Trendy Apt in Buttes Montmartre",
+    //   imageUrl:
+    //     "https://raw.githubusercontent.com/lewagon/flats-boilerplate/master/images/flat2.jpg",
+    //   price: 200,
+    //   priceCurrency: "EUR",
+    //   lat: 48.885707,
+    //   lng: 2.343543
+    // };
+    //
+    // const flats = [flat, flat, flat, flat];
 
     return (
       <div className="app">
         <div className="main">
           <div className="search" />
           <div className="flats">
-            <Flat flat={flat} />
-            <Flat flat={flat} />
-            <Flat flat={flat} />
+            {this.state.flats.map(function(flat) {
+              return <Flat flat={flat} />;
+            })}
           </div>
         </div>
         <div className="map" />

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import Flat from "./components/Flat";
+import GoogleMapReact from "google-map-react";
 
 class App extends Component {
   constructor(props) {
@@ -42,6 +43,10 @@ class App extends Component {
     // };
     //
     // const flats = [flat, flat, flat, flat];
+    const center = {
+      lat: 48.8566,
+      lng: 2.3522
+    };
 
     return (
       <div className="app">
@@ -53,7 +58,19 @@ class App extends Component {
             })}
           </div>
         </div>
-        <div className="map" />
+        <div className="map">
+          <GoogleMapReact
+            // bootstrapURLKeys={{ key: /* YOUR KEY HERE */ }}
+            center={center}
+            defaultZoom={11}
+          >
+            {/* <AnyReactComponent
+              lat={59.955413}
+              lng={30.337844}
+              text={"Kreyser Avrora"}
+            /> */}
+          </GoogleMapReact>
+        </div>
       </div>
     );
   }

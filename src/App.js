@@ -10,7 +10,10 @@ class App extends Component {
     super(props);
     this.state = {
       flats: [],
-      selectedFlat: null
+      // duplicate all the flats again
+      allFlats: [],
+      selectedFlat: null,
+      search: ""
     };
   }
 
@@ -27,7 +30,8 @@ class App extends Component {
         console.log(data);
 
         this.setState({
-          flats: data
+          flats: data,
+          allFlats: data
         });
       });
   }
@@ -36,6 +40,16 @@ class App extends Component {
     console.log(flat);
     this.setState({
       selectedFlat: flat
+    });
+  };
+
+  handleSearch = event => {
+    console.log(event);
+    this.setState({
+      search: event.target.value,
+      flats: this.state.allFlats.filter(flat =>
+        new RegExp(event.target.value, "i").exec(flat.name)
+      )
     });
   };
 
@@ -52,15 +66,29 @@ class App extends Component {
     // };
     //
     // const flats = [flat, flat, flat, flat];
-    const center = {
+    let center = {
       lat: 48.8566,
       lng: 2.3522
     };
 
+    if (this.state.selectedFlat) {
+      center = {
+        lat: this.state.selectedFlat.lat,
+        lng: this.state.selectedFlat.lng
+      };
+    }
+
     return (
       <div className="app">
         <div className="main">
-          <div className="search" />
+          <div className="search">
+            <input
+              type="text"
+              placeholder="Search..."
+              value={this.state.search}
+              onChange={this.handleSearch}
+            />
+          </div>
           <div className="flats">
             {this.state.flats.map(flat => {
               return (
@@ -75,7 +103,9 @@ class App extends Component {
         </div>
         <div className="map">
           <GoogleMapReact
-            // bootstrapURLKeys={{ key: /* YOUR KEY HERE */ }}
+            bootstrapURLKeys={{
+              key: "AIzaSyDfC3eEVkeC5PPrVMX1muM2VchFbBWnWRA"
+            }}
             center={center}
             defaultZoom={11}
           >
@@ -86,6 +116,7 @@ class App extends Component {
                   lat={flat.lat}
                   lng={flat.lng}
                   text={flat.price}
+                  selected={flat === this.state.selectedFlat}
                 />
               );
             })}
